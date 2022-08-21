@@ -25,7 +25,6 @@ class AuthTest {
 
     @BeforeEach
     void setup() {
-        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
     }
 
@@ -43,8 +42,6 @@ class AuthTest {
     @DisplayName("Should get error message if login with not registered user")
     void shouldGetErrorIfNotRegisteredUser() {
         var notRegisteredUser = getUser("active");
-        // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет
-        //  незарегистрированного пользователя, для заполнения полей формы используйте пользователя notRegisteredUser
         $x("//input[@name='login']").setValue(notRegisteredUser.getLogin());
         $x("//input[@name='password']").setValue(notRegisteredUser.getPassword());
         $x("//button[@data-test-id='action-login']").click();
@@ -55,8 +52,6 @@ class AuthTest {
     @DisplayName("Should get error message if login with blocked registered user")
     void shouldGetErrorIfBlockedUser() {
         var blockedUser = getRegisteredUser("blocked");
-        // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет,
-        //  заблокированного пользователя, для заполнения полей формы используйте пользователя blockedUser
         $x("//input[@name='login']").setValue(blockedUser.getLogin());
         $x("//input[@name='password']").setValue(blockedUser.getPassword());
         $x("//button[@data-test-id='action-login']").click();
@@ -68,9 +63,6 @@ class AuthTest {
     void shouldGetErrorIfWrongLogin() {
         var registeredUser = getRegisteredUser("active");
         var wrongLogin = getRandomLogin();
-        // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет с неверным
-        //  логином, для заполнения поля формы "Логин" используйте переменную wrongLogin,
-        //  "Пароль" - пользователя registeredUser
         $x("//input[@name='login']").setValue(wrongLogin);
         $x("//input[@name='password']").setValue(registeredUser.getPassword());
         $x("//button[@data-test-id='action-login']").click();
@@ -82,9 +74,6 @@ class AuthTest {
     void shouldGetErrorIfWrongPassword() {
         var registeredUser = getRegisteredUser("active");
         var wrongPassword = getRandomPassword();
-        // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет с неверным
-        //  паролем, для заполнения поля формы "Логин" используйте пользователя registeredUser,
-        //  "Пароль" - переменную wrongPassword
         $x("//input[@name='login']").setValue(registeredUser.getLogin());
         $x("//input[@name='password']").setValue(wrongPassword);
         $x("//button[@data-test-id='action-login']").click();
